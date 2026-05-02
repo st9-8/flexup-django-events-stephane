@@ -272,6 +272,7 @@ form textarea {
   height: 100px;
   min-height: 50px;
   max-height: 200px;
+  padding: 5px;
 }
 
 form input, form select {

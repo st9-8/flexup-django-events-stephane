@@ -33,7 +33,7 @@ class Event(models.Model):
     min_attendees = models.PositiveIntegerField(verbose_name="Minimum attendees", blank=True, null=True)
     organizer_token = models.CharField(max_length=16, unique=True, editable=False, default=generate_token_16)
     event_slug = models.CharField(max_length=50, unique=True, editable=False)
-    waiting_list = models.BooleanField(default=False, verbose_name="Require approval for all guests", help_text=_("When this box is checked, all guests who confirm their presence will be put on the waiting list. The organizer will have to approve them before they can attend the event."))
+    waiting_list = models.BooleanField(default=False, verbose_name="Place all new guests on the waiting list by default", help_text=_("When this box is checked, all guests who confirm their presence will be put on the waiting list. The organizer will have to approve them before they can attend the event."))
 
 
     @property

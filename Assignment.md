@@ -3,9 +3,9 @@
 This file containts the coding assignment, written in the same format as a "ticket" in a project management tool.
 
 ## Event creation form
-[ ] Change checkbox text from "Require approval for all guests" to "Place all new guests on the waiting list by default"
-[ ] Change the related tooltip to "If this is enabled, all new guests will be placed on the waiting list first, and only the organiser can approve them later and move them to the confirmed guest list".
-[ ] Add 5px padding for all multi-line text boxes (in the CSS file)
+[x] Change checkbox text from "Require approval for all guests" to "Place all new guests on the waiting list by default"
+[x] Change the related tooltip to "If this is enabled, all new guests will be placed on the waiting list first, and only the organiser can approve them later and move them to the confirmed guest list".
+[x] Add 5px padding for all multi-line text boxes (in the CSS file)
 
 ## Event management form
 [ ] Add extra space between the header and the form
