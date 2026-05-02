@@ -204,7 +204,7 @@ def event_manage(request, event_slug, organizer_token):
     else:
         form = EventForm(instance=event, request=request, lock_fields=True)
     
-    response_form = ResponseForm(request=request, is_organizer=True)
+    response_form = ResponseForm(request=request, is_organizer=True, event=event)
     return render(request, 'event_manage.html', {
         'event': event,
         'form': form,

@@ -173,7 +173,7 @@ class Response(models.Model):
     response_token = models.CharField(max_length=16, unique=True, editable=False, default=generate_token_16)
     is_organizer = models.BooleanField(default=False, verbose_name='Is organizer')
     status = EnumField(Status, verbose_name='Status', default=Status.NOT_INVITED, choices=Status.choices)
-    is_waiting_list = models.BooleanField(default=False, verbose_name='On waiting list')
+    is_waiting_list = models.BooleanField(default=False, verbose_name='Waiting list')
     
     def get_status_choices(self):
         """

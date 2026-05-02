@@ -16,10 +16,10 @@ This file containts the coding assignment, written in the same format as a "tick
     [x] "Copy the public registration link to the clipboard. This link can be shared with anyone who wants to register for the event."
 
 ## Add new response form (by organizer)
-[ ] Fix the "On waiting list" checkbox
-  [ ] Change the label to "Waiting list"
-  [ ] If the event checkbox "Place all new guests on the waiting list by default" is checked, then this checkbox should be checked by default when the form is opened. Else it should be unchecked by default.
-  [ ] Add a tooltip to the checkbox: "If this is checked, the guest will be placed on the waiting list. If unchecked, the guest will be confirmed directly."
+[x] Fix the "On waiting list" checkbox
+  [x] Change the label to "Waiting list"
+  [x] If the event checkbox "Place all new guests on the waiting list by default" is checked, then this checkbox should be checked by default when the form is opened. Else it should be unchecked by default.
+  [x] Add a tooltip to the checkbox: "If this is checked, the guest will be placed on the waiting list. If unchecked, the guest will be confirmed directly."
   
 ## Responses table
 [ ] Always show all 4 groups of responses, with the corresponding toolips:
