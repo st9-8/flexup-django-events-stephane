@@ -151,7 +151,7 @@
                 <div>
                     <div class="flex items-center relative group">
                         <label data-tooltip-target="tooltip-organizer-link"
-                            class="block bg-blue-50 text-sm font-medium text-gray-700 border cursor-pointer copy-label"
+                            class="btn btn-secondary block bg-blue-50 text-sm font-medium text-gray-700 border cursor-pointer copy-label"
                             for="{{ form.organizerLink.id_for_label }}">
                             {{ form.organizerLink.label }}
                         </label>
@@ -159,16 +159,16 @@
                             value="{{ form.organizerLink.value }}" style="display: none;">
                         <div id="tooltip-organizer-link" role="tooltip"
                             class="absolute left-0 top-full mt-1 z-10 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-300 px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-lg dark:bg-gray-700">
-                            Click the label to copy.
+                            Copy the secret organizer link to the clipboard. Keep this link private, as it allows full access to the event. Only share it with other organizers.
                             <div class="absolute w-3 h-3 bg-gray-900 rotate-45 -top-1 left-1/2 transform -translate-x-1/2 dark:bg-gray-700"></div>
                         </div>
                     </div>
-                </div>
 
-                <div>
+
+
                     <div class="flex items-center relative group">
                         <label data-tooltip-target="tooltip-registration-link"
-                            class="block bg-blue-50 text-sm font-medium text-gray-700 border cursor-pointer copy-label"
+                            class="btn btn-secondary block bg-blue-50 text-sm font-medium text-gray-700 border cursor-pointer copy-label whitespace-nowrap"
                             for="{{ form.registrationLink.id_for_label }}">
                             {{ form.registrationLink.label }}
                         </label>
@@ -176,7 +176,7 @@
                         value="{{ form.registrationLink.value }}" style="display: none;">
                         <div id="tooltip-registration-link" role="tooltip"
                             class="absolute left-0 top-full mt-1 z-10 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-300 px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-lg dark:bg-gray-700">
-                            Click the label to copy.
+                            Copy the public registration link to the clipboard. This link can be shared with anyone who wants to register for the event.
                             <div class="absolute w-3 h-3 bg-gray-900 rotate-45 -top-1 left-1/2 transform -translate-x-1/2 dark:bg-gray-700"></div>
                         </div>
                     </div>

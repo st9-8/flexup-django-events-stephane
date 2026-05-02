@@ -8,12 +8,12 @@ This file containts the coding assignment, written in the same format as a "tick
 [x] Add 5px padding for all multi-line text boxes (in the CSS file)
 
 ## Event management form
-[ ] Add extra space between the header and the form
-[ ] Reformat the organizer and registration links with the secondary button style, and:
-  [ ] Change button text to "Copy organizer link" and "Copy registration link" respectively.
-  [ ] Change the button tooltips to:
-    [ ] "Copy the secret organizer link to the clipboard. Keep this link private, as it allows full access to the event. Only share it with other organizers."
-    [ ] "Copy the public registration link to the clipboard. This link can be shared with anyone who wants to register for the event."
+[x] Add extra space between the header and the form
+[x] Reformat the organizer and registration links with the secondary button style, and:
+  [x] Change button text to "Copy organizer link" and "Copy registration link" respectively.
+  [x] Change the button tooltips to:
+    [x] "Copy the secret organizer link to the clipboard. Keep this link private, as it allows full access to the event. Only share it with other organizers."
+    [x] "Copy the public registration link to the clipboard. This link can be shared with anyone who wants to register for the event."
 
 ## Add new response form (by organizer)
 [ ] Fix the "On waiting list" checkbox

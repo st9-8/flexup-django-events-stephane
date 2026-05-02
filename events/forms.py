@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 class EventForm(forms.ModelForm):
     
     organizerLink = forms.CharField(
-        label="Organizer Link",
+        label="Copy organizer link",
         required=False,
         widget=forms.TextInput(attrs={
             'title': 'This field is auto-generated to create a unique private URL for organizers, allowing them to manage the event. Click on it to copy it to the clipboard. Save it and share it with other co-organizer if needed, but don\'t share it with guests.',
@@ -16,7 +16,7 @@ class EventForm(forms.ModelForm):
     )
 
     registrationLink = forms.CharField(
-        label="Registration Link",
+        label="Copy registration link",
         required=False,
         widget=forms.TextInput(attrs={
             'title': 'This field is auto-generated to create a unique URL for the event. Click on it to copy it to the clipboard. Save it and share it with the guests.',
