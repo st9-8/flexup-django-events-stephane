@@ -31,4 +31,4 @@ This file containts the coding assignment, written in the same format as a "tick
 [x] Every time the status of a guest is changed or the waiting list checkbox is toggled:
   [x] the record should be updated accordingly using HTMX or via a page reload (whichever is the easiest to code)
   [x] if this change results in the record being moved to a different group ("Confirmed", "Waiting list", "Pending" or "Not coming"), the record should be moved to the correct group in the table.
-[ ] Change the button to toggle the waiting status to a checkbox in a "Waiting list" column, with a tooltip "If checked, the guest is on the waiting list. If unchecked, the guest is confirmed directly."
+[x] Change the button to toggle the waiting status to a checkbox in a "Waiting list" column, with a tooltip "If checked, the guest is on the waiting list. If unchecked, the guest is confirmed directly."
