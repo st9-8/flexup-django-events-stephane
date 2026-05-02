@@ -145,7 +145,10 @@ def event_register(request, event_slug):
                 # Auto-apply waiting list in two cases:
                 # 1. Event requires approval for all guests
                 # 2. Event is at capacity and the guest confirmed attendance
-                elif not is_organizer and (event.waiting_list or (response.status == Status.CONFIRMED and event.is_at_capacity)):
+                elif not is_organizer and (
+                    (event.waiting_list and response.status == Status.CONFIRMED) or
+                    (response.status == Status.CONFIRMED and event.is_at_capacity)
+                ):
                     response.is_waiting_list = True
 
                 try:
