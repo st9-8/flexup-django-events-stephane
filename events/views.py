@@ -70,7 +70,7 @@ def event_edit(request, event_slug, organizer_token):
             form.save()
             messages.success(request, "The event has been successfully updated!")
             return redirect('event_manage', event_slug=event.event_slug, organizer_token=event.organizer_token)
-        
+
     return render(request, 'event_form.html', {
         'form': EventForm(request=request, instance=event),
         'editable': True,
@@ -79,8 +79,8 @@ def event_edit(request, event_slug, organizer_token):
 
 def event_register(request, event_slug):
     event = get_object_or_404(Event, event_slug=event_slug)
-   
-   
+
+
     # Check if the request is coming from an organizer
     organizer_token = request.GET.get('organizer_token')
     response_token = request.GET.get('response_token')
@@ -90,7 +90,7 @@ def event_register(request, event_slug):
     if organizer_token:
         # Verify the organizer token matches the event
         is_organizer = (organizer_token == event.organizer_token)
-        
+
         # Add to session if valid
         if is_organizer:
             if 'organizer_tokens' not in request.session:
@@ -99,17 +99,17 @@ def event_register(request, event_slug):
                 organizer_tokens = request.session['organizer_tokens']
                 organizer_tokens.append(event.organizer_token)
                 request.session['organizer_tokens'] = organizer_tokens
-    
+
     # Check if there's a response_token to edit an existing response
     if response_token:
         try:
             response = Response.objects.get(event=event, response_token=response_token)
         except Response.DoesNotExist:
             response = None
-    
+
     # Get responses that are not on waiting list
     responses = Response.objects.filter(event=event, is_waiting_list=False)
-    
+
     if request.method == 'POST':
         is_organizer = is_organizer or request.POST.get('is_organizer', False) in ('True', True)
         # If we have a response, we're updating an existing one
@@ -117,13 +117,13 @@ def event_register(request, event_slug):
             response_form = ResponseForm(request.POST, instance=response, event=event, request=request, is_organizer=is_organizer)
         else:
             response_form = ResponseForm(request.POST, event=event, request=request, is_organizer=is_organizer)
-        
+
         print(f"Form is bound: {response_form.is_bound}")
         print(f"Form data: {response_form.data}")
-        
+
         if response_form.is_valid():
             print(f"Form is valid. Cleaned data: {response_form.cleaned_data}")
-            
+
             if response:
                 # Updating existing response
                 response_form.save()
@@ -139,7 +139,7 @@ def event_register(request, event_slug):
                     is_organizer=is_organizer,
                     is_waiting_list=False  # Default to not on waiting list
                 )
-                
+
                 if is_organizer and not event.is_at_capacity:
                     response.is_waiting_list = response_form.cleaned_data['is_waiting_list']
                 # Auto-apply waiting list in two cases:
@@ -147,12 +147,12 @@ def event_register(request, event_slug):
                 # 2. Event is at capacity and the guest confirmed attendance
                 elif not is_organizer and (event.waiting_list or (response.status == Status.CONFIRMED and event.is_at_capacity)):
                     response.is_waiting_list = True
-                
+
                 try:
                     print(f"Saving response: {response.name}, event: {response.event}, status: {response.status}")
                     response.save()
                     print(f"Response saved successfully with ID: {response.id}")
-                    
+
                     # Redirect back to event management page if organizer
                     if is_organizer:
                         return redirect('event_manage', event_slug=event_slug, organizer_token=event.organizer_token)
@@ -171,8 +171,8 @@ def event_register(request, event_slug):
 
     confirmed_responses = event.responses.filter(status="CONFIRMED", is_waiting_list=False)
     form = EventForm(instance=event, request=request, lock_fields=True)
-    
-   
+
+
     context = {
         'event': event,
         'form': form,
@@ -190,12 +190,13 @@ def event_manage(request, event_slug, organizer_token):
     event = get_object_or_404(Event, event_slug=event_slug, organizer_token=organizer_token)
     responses = Response.objects.filter(event=event)
     confirmed_responses = event.responses.filter(status=Status.CONFIRMED, is_waiting_list=False)
+    waiting_list_responses = responses.filter(status=Status.CONFIRMED, is_waiting_list=True)
     declined_responses = event.responses.filter(Q(status=Status.DECLINED) | Q(status=Status.REJECTED))
     pending_responses = event.responses.exclude(
         Q(id__in=confirmed_responses.values_list('id', flat=True))|
-        Q(id__in=declined_responses.values_list('id', flat=True))
+        Q(id__in=declined_responses.values_list('id', flat=True))|
+        Q(id__in=waiting_list_responses.values_list('id', flat=True))
     )
-    
     if request.method == 'POST':
         form = EventForm(request.POST, instance=event, request=request)
         if form.is_valid():
@@ -203,7 +204,7 @@ def event_manage(request, event_slug, organizer_token):
             return redirect('event_manage', event_slug=event_slug, organizer_token=organizer_token)
     else:
         form = EventForm(instance=event, request=request, lock_fields=True)
-    
+
     response_form = ResponseForm(request=request, is_organizer=True, event=event)
     return render(request, 'event_manage.html', {
         'event': event,
@@ -211,6 +212,7 @@ def event_manage(request, event_slug, organizer_token):
         'response_form': response_form,
         'responses': responses,
         'confirmed_responses': confirmed_responses,
+        'waiting_list_responses': waiting_list_responses,
         'pending_responses': pending_responses,
         'declined_responses': declined_responses,
         'organizer_token': organizer_token,
@@ -227,12 +229,12 @@ def response_manage(request, event_slug, response_token):
     response = get_object_or_404(Response, response_token=response_token, event__event_slug=event_slug)
     event = response.event
     is_organizer = (event.organizer_token in request.session.get('organizer_tokens', []))
-    
+
     if request.method == 'POST':
         is_organizer = is_organizer or request.POST.get('is_organizer', False)
         response_form = ResponseForm(
-            request.POST, 
-            instance=response, 
+            request.POST,
+            instance=response,
             event=event,
             request=request,
             is_organizer=is_organizer
@@ -242,12 +244,12 @@ def response_manage(request, event_slug, response_token):
             return redirect('response_manage', event_slug=event_slug, response_token=response_token)
     else:
         response_form = ResponseForm(
-            instance=response, 
+            instance=response,
             event=event,
             request=request,
             is_organizer=is_organizer
         )
-    
+
     form = EventForm(instance=event, request=request, lock_fields=True)
     return render(request, 'response_manage.html', {
         'event': event,
@@ -266,6 +268,22 @@ def response_delete(request, event_slug, response_token):
     response.delete()
     return redirect('event_manage', event_slug=event_slug, organizer_token=event.organizer_token)
 
+def _get_response_groups(event: Event):
+    """
+        Small utility to get groups of responses of an event
+    """
+
+    confirmed_responses = event.responses.filter(status=Status.CONFIRMED, is_waiting_list=False)
+    waiting_list_responses = event.responses.filter(status=Status.CONFIRMED, is_waiting_list=True)
+    declined_responses = event.responses.filter(Q(status=Status.DECLINED) | Q(status=Status.REJECTED))
+    pending_responses = event.responses.exclude(
+        Q(id__in=confirmed_responses.values_list('id', flat=True)) |
+        Q(id__in=declined_responses.values_list('id', flat=True)) |
+        Q(id__in=waiting_list_responses.values_list('id', flat=True))
+    )
+
+    return confirmed_responses, waiting_list_responses, pending_responses, declined_responses
+
 @require_POST
 def update_response_status(request, event_slug, response_token, organizer_token):
     """
@@ -273,27 +291,37 @@ def update_response_status(request, event_slug, response_token, organizer_token)
     """
     response = get_object_or_404(Response, response_token=response_token, event__event_slug=event_slug)
     event = response.event
-    
+
     # Check if the user is an organizer for this event
     is_organizer = (event.organizer_token == organizer_token)
-    
+
     if not is_organizer:
         return HttpResponseForbidden("You don't have permission to update this response")
-    
+
     new_status = request.POST.get('status')
-    print(f"🔍 Nouveau statut reçu : {new_status}") 
+    print(f"🔍 Nouveau statut reçu : {new_status}")
     if new_status and new_status in [status.value for status in Status]:
         response.status = new_status
         response.save()
-        
-    # Return the updated response row
-    context = {
-        'response': response,
+
+    # Return the updated response groups
+    # context = {
+    #     'response': response,
+    #     'event': event,
+    #     'is_organizer': is_organizer,
+    #     'organizer_token': organizer_token
+    # }
+    # return render(request, 'partials/response_row.html', context)
+    confirmed, waiting, pending, declined = _get_response_groups(event)
+    return render(request, 'partials/responses_container.html', {
         'event': event,
-        'is_organizer': is_organizer,
-        'organizer_token': organizer_token
-    }
-    return render(request, 'partials/response_row.html', context)
+        'confirmed_responses': confirmed,
+        'waiting_list_responses': waiting,
+        'pending_responses': pending,
+        'declined_responses': declined,
+        'organizer_token': organizer_token,
+        'is_organizer': True,
+    })
 
 @require_POST
 def toggle_waiting_list(request, event_slug, response_token, organizer_token):
@@ -302,22 +330,32 @@ def toggle_waiting_list(request, event_slug, response_token, organizer_token):
     """
     response = get_object_or_404(Response, response_token=response_token, event__event_slug=event_slug)
     event = response.event
-    
+
     # Check if the user is an organizer for this event
     is_organizer = (event.organizer_token == organizer_token)
-    
+
     if not is_organizer:
         return HttpResponseForbidden("You don't have permission to update this response")
-    
+
     # Toggle waiting list status
     response.is_waiting_list = not response.is_waiting_list
     response.save()
-    
+
     # Return the updated response row
-    context = {
-        'response': response,
+    # context = {
+    #     'response': response,
+    #     'event': event,
+    #     'organizer_token': organizer_token,
+    #     'is_organizer': is_organizer
+    # }
+    # return render(request, 'partials/response_row.html', context)
+    confirmed, waiting, pending, declined = _get_response_groups(event)
+    return render(request, 'partials/responses_container.html', {
         'event': event,
+        'confirmed_responses': confirmed,
+        'waiting_list_responses': waiting,
+        'pending_responses': pending,
+        'declined_responses': declined,
         'organizer_token': organizer_token,
-        'is_organizer': is_organizer
-    }
-    return render(request, 'partials/response_row.html', context)
+        'is_organizer': True,
+    })

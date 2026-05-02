@@ -4,11 +4,11 @@
     <td class="text-sm text-gray-900 px-4 py-3">{{ response.name }}</td>
     <td class="text-sm text-gray-900 px-4 py-3">
         {% if is_organizer %}
-            <select 
-                name="status" 
+            <select
+                name="status"
                 class="text-sm rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                 hx-post="{% url 'update_response_status' event.event_slug response.response_token organizer_token %}"
-                hx-target="#response-{{ response.response_token }}"
+                hx-target="#responses_container"
                 hx-swap="outerHTML"
             >
                 {% for status_value, status_label in response.get_status_choices %}
@@ -54,25 +54,25 @@
                     <i class="bi bi-pencil-square text-blue-400 text-lg"></i> 
                 </span>
             </button>
-            
+
             {% if is_organizer %}
-            <button 
+            <button
                 hx-post="{% url 'toggle_waiting_list' event.event_slug response.response_token organizer_token %}"
-                hx-target="#response-{{ response.response_token }}"
+                hx-target="#responses_container"
                 hx-swap="outerHTML"
                 class="{% if response.is_waiting_list %}text-yellow-400 hover:text-yellow-4600{% else %}text-gray-400 hover:text-gray-600{% endif %}  bg-transparent hover:bg-transparent focus:bg-transparent m-0 px-1 py-1 text-sm"
                 title="{% if response.is_waiting_list %}Remove from waiting list{% else %}Add to waiting list{% endif %}"
             >
             <span class="inline-flex items-center">
                 {% if response.is_waiting_list %}
-                    <i class="bi bi-check-circle text-green-400 text-lg" ></i> 
+                    <i class="bi bi-check-circle text-green-400 text-lg" ></i>
                 {% else %}
-                    <i class="bi bi-person-plus text-yellow-600 text-lg" ></i> 
+                    <i class="bi bi-person-plus text-yellow-600 text-lg" ></i>
                 {% endif %}
             </span>
             </button>
             {% endif %}
-            
+
             <button onclick="deleteResponse('{{ event.event_slug }}', '{{ response.response_token }}')" class="text-red-600 hover:text-red-800  bg-transparent hover:bg-transparent focus:bg-transparent m-0 px-1 py-1 text-sm">
                 <span class="inline-flex items-center p-1 hover:bg-red-100 rounded ">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

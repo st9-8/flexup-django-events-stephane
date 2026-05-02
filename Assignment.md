@@ -22,13 +22,13 @@ This file containts the coding assignment, written in the same format as a "tick
   [x] Add a tooltip to the checkbox: "If this is checked, the guest will be placed on the waiting list. If unchecked, the guest will be confirmed directly."
   
 ## Responses table
-[ ] Always show all 4 groups of responses, with the corresponding toolips:
-  [ ] "Confirmed" - "These guests have confirmed their attendance, and they are not on the waiting list."
-  [ ] "Waiting list" - "These guests have confirmed their attendance, but they are currently on the waiting list."
-  [ ] "Pending" - "These guests have not yet responded or confirmed their attendance."
-  [ ] "Not coming" - "These guests have declined the invitation or their request to join has been rejected by the organizer."
-[ ] If a group has no records, show a message "No records in this group"
-[ ] Every time the status of a guest is changed or the waiting list checkbox is toggled:
-  [  ] the record should be updated accordingly using HTMX or via a page reload (whichever is the easiest to code)
-  [  ] if this change results in the record being moved to a different group ("Confirmed", "Waiting list", "Pending" or "Not coming"), the record should be moved to the correct group in the table.
+[x] Always show all 4 groups of responses, with the corresponding tooltips:
+  [x] "Confirmed" - "These guests have confirmed their attendance, and they are not on the waiting list."
+  [x] "Waiting list" - "These guests have confirmed their attendance, but they are currently on the waiting list."
+  [x] "Pending" - "These guests have not yet responded or confirmed their attendance."
+  [x] "Not coming" - "These guests have declined the invitation or their request to join has been rejected by the organizer."
+[x] If a group has no records, show a message "No records in this group"
+[x] Every time the status of a guest is changed or the waiting list checkbox is toggled:
+  [x] the record should be updated accordingly using HTMX or via a page reload (whichever is the easiest to code)
+  [x] if this change results in the record being moved to a different group ("Confirmed", "Waiting list", "Pending" or "Not coming"), the record should be moved to the correct group in the table.
 [ ] Change the button to toggle the waiting status to a checkbox in a "Waiting list" column, with a tooltip "If checked, the guest is on the waiting list. If unchecked, the guest is confirmed directly."

@@ -1,0 +1,144 @@
+<div id="responses_container">
+    {% if confirmed_responses %}
+    <div class="overflow-x-auto">
+        <h2 class="text-lg font-semibold text-green-600 mt-4 mb-2">Confirmed</h2>
+        <div class="grid grid-cols-1 gap-4 sm:hidden">
+            {% for response in confirmed_responses %}
+            {% include "partials/response_card.html" with response=response event=event is_organizer=True %}
+            {% endfor %}
+        </div>
+        <div class="hidden sm:block">
+            <div class="overflow-x-auto">
+                <table class="min-w-full">
+                    <thead class="bg-gray-50 border-b">
+                    <tr>
+                        <th scope="col" class="text-sm font-medium text-gray-900 px-2 py-2 text-left">#</th>
+                        <th scope="col" class="text-sm font-medium text-gray-900 px-4 py-2 text-left">Name</th>
+                        <th scope="col" class="text-sm font-medium text-gray-900 px-4 py-2 text-left">Status</th>
+                        <th scope="col" class="text-sm font-medium text-gray-900 px-4 py-2 text-left">Contact</th>
+                        <th scope="col" class="text-sm font-medium text-gray-900 px-4 py-2 text-left">Waiting List</th>
+                        <th scope="col" class="text-sm font-medium text-gray-900 px-4 py-2 text-left">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for response in confirmed_responses %}
+                    {% include "partials/response_row.html" with response=response event=event is_organizer=True %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% else %}
+        <h2 class="text-lg font-semibold text-green-600 mt-4 mb-2">Confirmed</h2>
+        <h3 class="text-lg font-semibold text-dark-600 mt-4 mb-2">No records in this group</h3>
+        {% endif %}
+
+        {% if waiting_list_responses %}
+        <div class="overflow-x-auto">
+            <h2 class="text-lg font-semibold text-gray-600 mt-4 mb-2">Waiting list</h2>
+            <div class="grid grid-cols-1 gap-4 sm:hidden">
+                {% for response in waiting_list_responses %}
+                {% include "partials/response_card.html" with response=response event=event is_organizer=True %}
+                {% endfor %}
+            </div>
+            <div class="hidden sm:block">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full">
+                        <thead class="bg-gray-50 border-b">
+                        <tr>
+                            <th scope="col" class="text-sm font-medium text-gray-900 px-2 py-2 text-left">#</th>
+                            <th scope="col" class="text-sm font-medium text-gray-900 px-4 py-2 text-left">Name</th>
+                            <th scope="col" class="text-sm font-medium text-gray-900 px-4 py-2 text-left">Status</th>
+                            <th scope="col" class="text-sm font-medium text-gray-900 px-4 py-2 text-left">Contact</th>
+                            <th scope="col" class="text-sm font-medium text-gray-900 px-4 py-2 text-left">Waiting List
+                            </th>
+                            <th scope="col" class="text-sm font-medium text-gray-900 px-4 py-2 text-left">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for response in waiting_list_responses %}
+                        {% include "partials/response_row.html" with response=response event=event is_organizer=True %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% else %}
+            <h2 class="text-lg font-semibold text-gray-600 mt-4 mb-2">Waiting list</h2>
+            <h3 class="text-lg font-semibold text-dark-600 mt-4 mb-2">No records in this group</h3>
+            {% endif %}
+
+            {% if pending_responses %}
+            <h2 class="text-lg font-semibold text-yellow-600 mt-4 mb-2">Pending</h2>
+            <div class="grid grid-cols-1 gap-4 sm:hidden">
+                {% for response in pending_responses %}
+                {% include "partials/response_card.html" with response=response event=event is_organizer=True %}
+                {% endfor %}
+            </div>
+            <div class="hidden sm:block">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full">
+                        <thead class="bg-gray-50 border-b">
+                        <tr>
+                            <th scope="col" class="text-sm font-medium text-gray-900 px-2 py-2 text-left">#</th>
+                            <th scope="col" class="text-sm font-medium text-gray-900 px-4 py-2 text-left">Name</th>
+                            <th scope="col" class="text-sm font-medium text-gray-900 px-4 py-2 text-left">Status</th>
+                            <th scope="col" class="text-sm font-medium text-gray-900 px-4 py-2 text-left">Contact</th>
+                            <th scope="col" class="text-sm font-medium text-gray-900 px-4 py-2 text-left">Waiting List
+                            </th>
+                            <th scope="col" class="text-sm font-medium text-gray-900 px-4 py-2 text-left">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for response in pending_responses %}
+                        {% include "partials/response_row.html" with response=response event=event is_organizer=True %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% else %}
+            <h2 class="text-lg font-semibold text-yellow-600 mt-4 mb-2">Pending</h2>
+            <h3 class="text-lg font-semibold text-dark-600 mt-4 mb-2">No records in this group</h3>
+            {% endif %}
+
+            {% if declined_responses %}
+            <h2 class="text-lg font-semibold text-red-600 mt-6 mb-2">Not Coming</h2>
+            <div class="grid grid-cols-1 gap-4 sm:hidden">
+                {% for response in declined_responses %}
+                {% include "partials/response_card.html" with response=response event=event is_organizer=True %}
+                {% endfor %}
+            </div>
+            <div class="hidden sm:block">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full">
+                        <thead class="bg-gray-50 border-b">
+                        <tr>
+                            <th scope="col" class="text-sm font-medium text-gray-900 px-2 py-2 text-left">#</th>
+                            <th scope="col" class="text-sm font-medium text-gray-900 px-4 py-2 text-left">Name</th>
+                            <th scope="col" class="text-sm font-medium text-gray-900 px-4 py-2 text-left">Status</th>
+                            <th scope="col" class="text-sm font-medium text-gray-900 px-4 py-2 text-left">Contact</th>
+                            <th scope="col" class="text-sm font-medium text-gray-900 px-4 py-2 text-left">Waiting List
+                            </th>
+                            <th scope="col" class="text-sm font-medium text-gray-900 px-4 py-2 text-left ">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for response in declined_responses %}
+                        {% include "partials/response_row.html" with response=response event=event is_organizer=True %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% else %}
+            <h2 class="text-lg font-semibold text-red-600 mt-6 mb-2">Not Coming</h2>
+            <h3 class="text-lg font-semibold text-dark-600 mt-4 mb-2">No records in this group</h3>
+            {% endif %}
+
+            {% if not declined_responses and not confirmed_responses and not pending_responses and not waiting_list_responses %}
+            <p class="text-gray-500">No responses yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
